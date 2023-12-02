@@ -79,7 +79,14 @@ var AppView = Backbone.View.extend({
 				window.URL.revokeObjectURL(url);
 			};
 		}());
-		saveByteArray([MEMORY], 'a.bin');
+
+		let MEMORY_COPY = [...MEMORY];
+		while(MEMORY_COPY[MEMORY_COPY.length-1] === 0){
+			MEMORY_COPY.pop();
+		}
+		MEMORY_COPY = new Uint8Array(MEMORY_COPY)
+		
+		saveByteArray([MEMORY_COPY], 'a.bin');
 	},
 
 	triggerRedraw: function () {
