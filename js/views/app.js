@@ -6,7 +6,8 @@ var AppView = Backbone.View.extend({
 		this.memview = new MemoryView();
 
 		this.listenTo(Backbone.Events, 'app:redraw', this.redrawButtons);
-
+		this.$('.download').addClass('disabled');
+		
 		this.render();
 		editor = this.editor;
 	},
@@ -15,7 +16,8 @@ var AppView = Backbone.View.extend({
 		'click .compile': 'compile',
 		'click .reset': 'reset',
 		'click .continue': 'continue',
-		'click .step': 'step'
+		'click .step': 'step',
+		'click .download': 'download'
 	},
 
 	render: function () {
@@ -36,6 +38,7 @@ var AppView = Backbone.View.extend({
 
 		Backbone.Events.trigger('app:redraw');
 		this.$('.continue span').text('Start');
+		this.$('.download').removeClass('disabled');
 	},
 
 	reset: function () {
@@ -60,6 +63,23 @@ var AppView = Backbone.View.extend({
 			STEP();
 			Backbone.Events.trigger('app:redraw');
 		}
+	},
+
+	download: function () {
+		var saveByteArray = (function () {
+			var a = document.createElement("a");
+			document.body.appendChild(a);
+			a.style = "display: none";
+			return function (data, name) {
+				var blob = new Blob(data, {type: "octet/stream"}),
+				    url = window.URL.createObjectURL(blob);
+				a.href = url;
+				a.download = name;
+				a.click();
+				window.URL.revokeObjectURL(url);
+			};
+		}());
+		saveByteArray([MEMORY], 'a.bin');
 	},
 
 	triggerRedraw: function () {
