@@ -28,6 +28,7 @@ var AppView = Backbone.View.extend({
 
 	compile: function () {
 		var obj = ASSEMBLE(this.editor.getSource());
+		console.log(obj);
 		this.inspector.setObjectCode(obj);
 
 		if (obj.errors.length === 0)
