@@ -1,5 +1,5 @@
 // Constants
-var MEM_SIZE = 0x2000;
+var MEM_SIZE = 0xFFFF;
 var REG_COUNT = 15;
 
 // Registers and memory
