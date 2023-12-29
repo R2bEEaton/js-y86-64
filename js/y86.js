@@ -371,9 +371,9 @@ function INIT (obj) {
 
 var STEP_INTERVAL = null, RUN_DONE_CALLBACK;
 
-// Run 256 instructions
-function RUN_STEP () {
-	for (var i = 0; i < 256; i++) {
+// Run steps_per_interval instructions
+function RUN_STEP (steps_per_interval) {
+	for (var i = 0; i < steps_per_interval; i++) {
 		if (PC.lessThan(MEM_SIZE) && STAT === 'AOK'){
 			STEP();
 		}
@@ -408,7 +408,8 @@ function RUN (cb) {
 		STAT = 'AOK';
 
 	// Use fastest available interval the browser can provide
-	STEP_INTERVAL = setInterval(RUN_STEP, 0);
+	var steps_per_interval = parseInt(prompt("Steps per interval?"));
+	STEP_INTERVAL = setInterval(RUN_STEP(steps_per_interval), 0);
 	RUN_DONE_CALLBACK = cb;
 }
 
