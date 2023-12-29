@@ -409,7 +409,7 @@ function RUN (cb) {
 
 	// Use fastest available interval the browser can provide
 	var steps_per_interval = parseInt(prompt("Steps per interval?"));
-	STEP_INTERVAL = setInterval(RUN_STEP(steps_per_interval), 0);
+	STEP_INTERVAL = setInterval(function() { RUN_STEP(steps_per_interval); }, 0);
 	RUN_DONE_CALLBACK = cb;
 }
 
